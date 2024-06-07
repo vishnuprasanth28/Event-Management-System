@@ -119,15 +119,30 @@ public class Admin extends HttpServlet {
 		                 vendor.setVendorName(vendorName);
 		                 vendor.setContact(vendorContact);
 		                 vendor.setVendorType(vendorType);
-		                 
+		                 int price = Integer.parseInt(request.getParameter("price"));
+	            			Part filesPart = request.getPart("profile_image");
+	            	        if (filesPart != null) {
+	            	            // Debugging messages
+	            	            System.out.println(filesPart.getName());
+	            	            System.out.println(filesPart.getSize());
+	            	            System.out.println(filesPart.getContentType());
+	            	            // Obtain the input stream of the uploaded file
+	            	            inputStream = filesPart.getInputStream();
+	            	        }
+	            	        byte[] image =null;
+	            	        if(inputStream !=null) {
+	            	        	image = inputStream.readAllBytes();
+	            	        }
+		                 vendor.setPrice(price);
+		                 vendor.setImage(image);
 					try {
 						dbAction.addVendor(vendor);
 					} catch (ClassNotFoundException | SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	}
-
+					break;
+	}			
 }
 }
 }

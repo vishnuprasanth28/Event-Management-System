@@ -1,5 +1,7 @@
 package com.chainsys.model;
 
+import java.util.Arrays;
+
 public class Vendor {
 	
 	private int vendorId;
@@ -12,7 +14,7 @@ public class Vendor {
 	@Override
 	public String toString() {
 		return "Vendor [vendorId=" + vendorId + ", vendorName=" + vendorName + ", contact=" + contact + ", vendorType="
-				+ vendorType + "]";
+				+ vendorType + ", image=" + Arrays.toString(image) + ", price=" + price + "]";
 	}
 	public String getVendorName() {
 		return vendorName;
@@ -35,4 +37,18 @@ public class Vendor {
 	private String vendorName;
 	private String contact;
 	private String vendorType;
+	 public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	private byte[] image;
+	    private int price;
 }

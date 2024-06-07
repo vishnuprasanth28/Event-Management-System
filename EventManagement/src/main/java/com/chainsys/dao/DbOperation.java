@@ -127,11 +127,13 @@ public class DbOperation {
 	public void addVendor(Vendor vendor) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection= ConnectionUtil.getConnection();
-		String insertVendor ="INSERT INTO vendor (vendor_name, vendor_contact, vendor_type) VALUES (?, ?, ?)";
+		String insertVendor ="INSERT INTO vendor (vendor_name, vendor_contact, vendor_type,price, profile) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(insertVendor);
 		preparedStatement.setString(1, vendor.getVendorName());
 		preparedStatement.setString(2, vendor.getContact());
 		preparedStatement.setString(3, vendor.getVendorType());
+		preparedStatement.setInt(4, vendor.getPrice());
+		preparedStatement.setBytes(5, vendor.getImage());
 		int row = preparedStatement.executeUpdate();
 		System.out.println("Affected row "+row);
 		}

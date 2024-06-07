@@ -440,19 +440,24 @@ font-size: 1.6rem;
             <a href="eventservice.jsp?event=Weddings">
                 <img src="images/events1.jpeg" alt="Package 1">
                 <div class="item-caption">Weddings</div>
+                </a>
             </div>
             <div class="package-item">
-            <a href="eventservice.jsp?event=Birthdays">
+            <a href="eventservice.jsp?event=Birthdays">hello
                 <img src="images/birthday.webp" alt="Package 2">
                 <div class="item-caption">Birthdays</div>
+                </a>
             </div>
             <div class="package-item">
 			<a href="eventservice.jsp?event=Anniversaries">
                 <img src="images/anniversary.webp" alt="Package 3">
                 <div class="item-caption">Anniversaries</div>
+                </a>
             </div>
+            
         </div>
     </div>
      </section>
+     
 </body>
 </html>
