@@ -2,6 +2,7 @@ package com.chainsys.dao;
 
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -179,4 +180,81 @@ public class DbOperation {
 			return venues; 
         
 }
+	 public ArrayList<Venue> getAvailableVenues(Date date) throws SQLException, ClassNotFoundException {
+		 Class.forName("com.mysql.cj.jdbc.Driver");
+			Venue venue = new Venue();
+	        ArrayList<Venue> availableVenues = new ArrayList<>();
+	        Connection connection= ConnectionUtil.getConnection();
+	        String selectVenue = "SELECT venue_id,venue_name, venue_address, capacity, contact_phone, price,venue_image FROM Venue WHERE venue_id NOT IN (SELECT venue_id FROM Events WHERE event_date = ?)";
+	        try (PreparedStatement statement = connection.prepareStatement(selectVenue)) {
+	            statement.setDate(1, date);
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                while (resultSet.next()) {
+	                	venue.setVenueId(resultSet.getInt("venue_id"));
+	                    venue.setVenueName(resultSet.getString("venue_name"));
+	                    venue.setAddress(resultSet.getString("venue_address"));
+	                    venue.setCapacity(resultSet.getInt("capacity"));
+	                    venue.setContactPhone(resultSet.getString("contact_phone"));
+	                    venue.setPrice(resultSet.getInt("price"));
+	                    Blob blob = resultSet.getBlob("venue_image");
+	                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+	                 //   String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+	                    venue.setImage(imageBytes);
+	                    availableVenues.add(venue);
+	                }
+	            }
+	        }
+	        return availableVenues;
+	    }
+	
+	 public ArrayList<Vendor> getPhotographers(Date date) throws ClassNotFoundException, SQLException{
+		 Class.forName("com.mysql.cj.jdbc.Driver");
+			
+	        ArrayList<Vendor> availableVendors = new ArrayList<>();
+	        Connection connection= ConnectionUtil.getConnection();
+	        String selectVendors = "SELECT v.vendor_id, v.vendor_name, v.vendor_contact, v.price, v.profile FROM vendor v WHERE v.vendor_type = 'photography' AND NOT EXISTS (SELECT e.photography_id FROM Events e WHERE e.event_date = ? AND e.photography_id = v.vendor_id)";
+                    
+	        try (PreparedStatement statement = connection.prepareStatement(selectVendors)) {
+	            statement.setDate(1, date);
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                while (resultSet.next()) {
+	                	Vendor vendor = new Vendor();
+	                	vendor.setVendorId(resultSet.getInt("vendor_id"));
+	                	vendor.setVendorName(resultSet.getString("vendor_name"));
+	                	vendor.setContact(resultSet.getString("vendor_contact"));
+	                	vendor.setPrice(resultSet.getInt("price"));
+	                	Blob blob = resultSet.getBlob("profile");
+	                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+	                    vendor.setImage(imageBytes);
+	                    availableVendors.add(vendor);
+	                }
+	 }
+	        }
+	        return availableVendors;
+	 }
+	
+	 public ArrayList<Vendor> getCatering(Date date) throws ClassNotFoundException, SQLException{
+		 Class.forName("com.mysql.cj.jdbc.Driver");
+			
+	        ArrayList<Vendor> availableCatering = new ArrayList<>();
+	        Connection connection= ConnectionUtil.getConnection();
+	        String selectCatering ="SELECT v.vendor_id, v.vendor_name, v.vendor_contact, v.price, v.profile FROM vendor v WHERE v.vendor_type = 'Catering' AND NOT EXISTS (SELECT e.catering_id FROM Events e WHERE e.event_date = ? AND e.catering_id = v.vendor_id)";
+	        try (PreparedStatement statement = connection.prepareStatement(selectCatering)) {
+	            statement.setDate(1, date);
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                while (resultSet.next()) {
+	                	Vendor vendor = new Vendor();
+	                	vendor.setVendorId(resultSet.getInt("vendor_id"));
+	                	vendor.setVendorName(resultSet.getString("vendor_name"));
+	                	vendor.setContact(resultSet.getString("vendor_contact"));
+	                	vendor.setPrice(resultSet.getInt("price"));
+	                	Blob blob = resultSet.getBlob("profile");
+	                    byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+	                    vendor.setImage(imageBytes);
+	                    availableCatering.add(vendor);
+	                }
+	 }
+	        }
+	        return availableCatering;
+	 }
 }

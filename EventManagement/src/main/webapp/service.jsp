@@ -418,17 +418,17 @@ font-size: 1.6rem;
         <h2>Corporate Events</h2>
         <div class="menu-container">
             <div class="menu-item">
-            <a href="eventservice.jsp?event=Conference">
+           <a href="bookings.jsp?event=conference">
                 <img src="images/conference.jpeg" alt="Menu 1">
                 <div class="item-caption" >Conference</div>
             </div>
             <div class="menu-item">
-            <a href="eventservice.jsp?event=ProductLaunch">
+            <a href="bookings.jsp?event=ProductLaunch">
                 <img src="images/product.webp" alt="Menu 2">
                 <div class="item-caption">Product Launch</div>
             </div>
             <div class="menu-item">
-           <a href="eventservice.jsp?event=TradeShows">
+           <a href="bookings.jsp?event=TradeShows">
                 <img src="images/trade.jpeg" alt="Menu 3">
                 <div class="item-caption">Trade Shows</div>
             </div>
@@ -437,19 +437,19 @@ font-size: 1.6rem;
         <h2>Social Events</h2>
         <div class="package-container">
             <div class="package-item">
-            <a href="eventservice.jsp?event=Weddings">
+            <a href="bookings.jsp?event=Weddings">
                 <img src="images/events1.jpeg" alt="Package 1">
                 <div class="item-caption">Weddings</div>
                 </a>
             </div>
             <div class="package-item">
-            <a href="eventservice.jsp?event=Birthdays">hello
+            <a href="bookings.jsp?event=Birthdays">
                 <img src="images/birthday.webp" alt="Package 2">
                 <div class="item-caption">Birthdays</div>
                 </a>
             </div>
             <div class="package-item">
-			<a href="eventservice.jsp?event=Anniversaries">
+			<a href="bookings.jsp?event=Anniversaries">
                 <img src="images/anniversary.webp" alt="Package 3">
                 <div class="item-caption">Anniversaries</div>
                 </a>
@@ -458,6 +458,9 @@ font-size: 1.6rem;
         </div>
     </div>
      </section>
+     
+
+     
      
 </body>
 </html>

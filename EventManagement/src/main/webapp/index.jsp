@@ -12,6 +12,7 @@ boolean isLoggedIn = (user != null);
 <head>
 <meta charset="ISO-8859-1">
 <title>Epic Events</title>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     .carousel-item {
@@ -26,6 +27,64 @@ boolean isLoggedIn = (user != null);
       text-align: center;
       color: #fff;
     }
+    .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 50px 0;
+}
+
+.footer-logo {
+    height: 50px; /* Adjust height as needed */
+}
+
+.footer h5 {
+    color: #ffc107; /* Yellow color */
+}
+
+.footer p {
+    margin-bottom: 5px;
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icons li a {
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons li a:hover {
+    color: #ffc107; /* Yellow color on hover */
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 5px;
+}
+
+.footer-links li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links li a:hover {
+    color: #ffc107; /* Yellow color on hover */
+}
+    
   </style>
 </head>
 <body>
@@ -58,7 +117,7 @@ boolean isLoggedIn = (user != null);
                 <% } else { %>
                 <!-- Show user's name if logged in -->
                 <li class="nav-item">
-                    <span class="nav-link">Welcome <%= user.getUsername() %></span>
+                    <span class="nav-link">Hii <%= user.getUsername() %></span>
                     
                 </li>
                 <li class="nav-item">
@@ -109,9 +168,43 @@ boolean isLoggedIn = (user != null);
     <span class="sr-only">Next</span>
   </a>
 </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="images/epic-events-high-resolution-logo.png" alt="Footer Logo" class="footer-logo">
+            </div>
+            <div class="col-md-3">
+                <h5>Contact Us</h5>
+                <p>123 Street, madurai</p>
+                <p>Email: epicevent@gmail.com</p>
+                <p>Phone: +91 9090878900</p>
+            </div>
+            <div class="col-md-3">
+                <h5>Follow Us</h5>
+                <ul class="social-icons">
+                    <li><a href="#" class="fa fa-facebook"></a></li>
+                    <li><a href="#" class="fa fa-twitter"></a></li>
+                    <li><a href="#" class="fa fa-instagram"></a></li>
+                  
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Links</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Copyright Notice</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

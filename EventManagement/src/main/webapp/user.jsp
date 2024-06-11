@@ -85,11 +85,11 @@ html {
   <h2>Login</h2>
   <form action="UserLogs" method="post">
     <div class="user-box">
-      <input type="text"  name="Username" placeholder="Username" required>
+      <input type="text"  name="Username" placeholder="Username"  pattern="[A-Za-z]" required>
       <label>userName</label>
     </div>
     <div class="user-box">
-      <input type="password" name="Password" placeholder="Password" required>
+      <input type="password" name="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" required>
       <label>Password</label>
     </div>
     
