@@ -15,6 +15,7 @@
 <meta charset="ISO-8859-1">
 <title>Additional Services</title>
  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
         .card {
             border: 1px solid #ccc;
@@ -43,6 +44,10 @@
     </style>
 </head>
 <body>
+<form action="EventBookingServlet" method="post">
+    <input type="hidden" name="date" value="<%= request.getParameter("date") %>">
+    <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
+	  <input type="hidden" name="action" value="checkout">
 <h1>Photography</h1>
 <div class="box">
 
@@ -52,19 +57,17 @@
     	ArrayList<Vendor> availablePhotographer = (ArrayList<Vendor>)request.getAttribute("photography");
         for (Vendor photographer : availablePhotographer) {
         	  String base64Image = Base64.getEncoder().encodeToString(photographer.getImage());
+        	  
 %>
             <div class="card">
             
                 <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile Image">
-                <h2><%=photographer.getVendorName()%></h2>
+                <h2><i class="fas fa-camera"></i><%= photographer.getVendorName()%></h2>
                 <p>Contact Phone : <%=photographer.getContact()%></p>
-                <p>price : <%=photographer.getPrice()%></p>
-               
-              <form action="EventBookingServlet" method="post">
-                    <input type="hidden" name="date" value="<%= request.getParameter("date") %>">
-                    <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
-                     <input type="checkbox" name="selectedPhotographers" value="<%= photographer.getVendorId() %>">
-                </form>
+                <p>Price : <%=photographer.getPrice()%></p>
+                <input type="hidden" name="pricePhoto" value=" <%=photographer.getPrice()%>">
+               <input type="checkbox" name="selectedPhotographers" value="<%= photographer.getVendorId() %>">
+                
             </div>
        
 <%
@@ -87,15 +90,13 @@
             <div class="card">
             
                 <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile Image">
-                <h2><%=catering.getVendorName()%></h2>
+                <h2><i class="fas fa-utensils"></i><%=catering.getVendorName()%></h2>
                 <p>Contact Phone : <%=catering.getContact()%></p>
-                <p>price : <%=catering.getPrice()%></p>
+                <p>Price : <%=catering.getPrice()%></p>
                
-               <form action="EventBookingServlet" method="post">
-                    <input type="hidden" name="date" value="<%= request.getParameter("date") %>">
-                    <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
+             			<input type="hidden" name="pricePhoto" value=" <%=catering.getPrice()%>">
                       <input type="checkbox" name="selectedCaterings" value="<%= catering.getVendorId() %>">
-                </form>
+                
             </div>
 <%
         }
@@ -105,9 +106,8 @@
 %>
 </div>
 
-<form action="EventBookingServlet" method="post">
-    <input type="hidden" name="date" value="<%= request.getParameter("date") %>">
-    <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
+
+   
     <input type="submit" class="btn btn-primary" value="Continue">
 </form>
 </body>

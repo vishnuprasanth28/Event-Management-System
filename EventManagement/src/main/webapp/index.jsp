@@ -14,6 +14,8 @@ boolean isLoggedIn = (user != null);
 <title>Epic Events</title>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <style>
     .carousel-item {
       height: 500px;
@@ -34,11 +36,11 @@ boolean isLoggedIn = (user != null);
 }
 
 .footer-logo {
-    height: 50px; /* Adjust height as needed */
+    height: 50px; 
 }
 
 .footer h5 {
-    color: #ffc107; /* Yellow color */
+    color: #ffc107; 
 }
 
 .footer p {
@@ -63,7 +65,7 @@ boolean isLoggedIn = (user != null);
 }
 
 .social-icons li a:hover {
-    color: #ffc107; /* Yellow color on hover */
+    color: #ffc107; 
 }
 
 .footer-links {
@@ -82,7 +84,7 @@ boolean isLoggedIn = (user != null);
 }
 
 .footer-links li a:hover {
-    color: #ffc107; /* Yellow color on hover */
+    color: #ffc107; 
 }
     
   </style>
@@ -183,9 +185,9 @@ boolean isLoggedIn = (user != null);
             <div class="col-md-3">
                 <h5>Follow Us</h5>
                 <ul class="social-icons">
-                    <li><a href="#" class="fa fa-facebook"></a></li>
-                    <li><a href="#" class="fa fa-twitter"></a></li>
-                    <li><a href="#" class="fa fa-instagram"></a></li>
+                    <li><a href="#" class="fab fa-twitter"></a></li>
+                    <li><a href="#" class="fab fa-instagram"></a></li>
+                    <li><a href="#" class="fab fa-facebook"></a></li>
                   
                 </ul>
             </div>

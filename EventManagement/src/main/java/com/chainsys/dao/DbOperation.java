@@ -37,7 +37,19 @@ public class DbOperation {
 		
 	}
 	
+	public int getUserId (User user) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		int id=0;
+		Connection connection= ConnectionUtil.getConnection();
+		String getId = "select user_id from Users where username=?";
+		PreparedStatement prepareStatement = connection.prepareStatement(getId);
+		prepareStatement.setString(1, user.getUsername());
+		ResultSet resultSet = prepareStatement.executeQuery();
+		while(resultSet.next()) {
+			id= resultSet.getInt("user_id");
 	
+		}return id;
+	}
 	
 	
 	public void insertUser(User user) throws ClassNotFoundException, SQLException {
