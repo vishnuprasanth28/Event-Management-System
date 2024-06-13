@@ -103,7 +103,7 @@ boolean isLoggedIn = (user != null);
                  <form action="EventBookingServlet" method="post">
                  	
                     <input type="hidden" name="venueId" value="<%= venue.getVenueId() %>">
-                    
+                    <input type="hidden" name="venuePrice" value="<%= venue.getPrice() %>">
                     <input type="hidden" name="date" value="<%= request.getAttribute("date") %>">
                      <input type="hidden" name="eventType" value="<%= request.getAttribute("event") %>">
                 	  <input type="hidden" name="action" value="getService">

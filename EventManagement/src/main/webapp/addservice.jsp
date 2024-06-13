@@ -9,6 +9,11 @@
 <%@ page import="com.chainsys.model.Venue" %>
  <%@ page import="java.util.*" %>
     <%@ page import="com.chainsys.model.User" %>
+     <%
+
+User user = (User) session.getAttribute("user");
+boolean isLoggedIn = (user != null);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +49,56 @@
     </style>
 </head>
 <body>
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#"><img src="images/epic-events-high-resolution-logo.png" alt="Company Logo" style="height: 40px;"></a>
+    <span class="navbar-text mr-auto">EPIC EVENTS</span>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="service.jsp">Services</a>
+      </li>
+       <% if (!isLoggedIn) { %>
+                <!-- Show Sign Up and Sign In only if the user is not logged in -->
+                <li class="nav-item">
+                    <a class="nav-link" href="registration.jsp">Sign Up</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sign In
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="signIn.jsp">Admin</a>
+                        <a class="dropdown-item" href="user.jsp">User</a>
+                    </div>
+                </li>
+                <% } else { %>
+                <!-- Show user's name if logged in -->
+                <li class="nav-item">
+                    <span class="nav-link">Hii <%= user.getUsername() %></span>
+                    
+                </li>
+                <li class="nav-item">
+                      <form action="LogOutServlet" method="post">
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </form>
+                </li>
+                <% } %>
+            </ul>
+  </div>
+</nav>
+
+
+
+
+
+
 <form action="EventBookingServlet" method="post">
+ <input type="hidden" name="venue" value="<%= request.getAttribute("venueId") %>">
+ <input type="hidden" name="venuePrice" value="<%= request.getAttribute("venuePrice") %>">
     <input type="hidden" name="date" value="<%= request.getParameter("date") %>">
     <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
 	  <input type="hidden" name="action" value="checkout">
@@ -62,7 +116,7 @@
             <div class="card">
             
                 <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile Image">
-                <h2><i class="fas fa-camera"></i><%= photographer.getVendorName()%></h2>
+                <h2><i class="fas fa-camera"></i>&nbsp;&nbsp;&nbsp;<%= photographer.getVendorName()%></h2>
                 <p>Contact Phone : <%=photographer.getContact()%></p>
                 <p>Price : <%=photographer.getPrice()%></p>
                 <input type="hidden" name="pricePhoto" value=" <%=photographer.getPrice()%>">
@@ -90,11 +144,11 @@
             <div class="card">
             
                 <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile Image">
-                <h2><i class="fas fa-utensils"></i><%=catering.getVendorName()%></h2>
+                <h2><i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;<%=catering.getVendorName()%></h2>
                 <p>Contact Phone : <%=catering.getContact()%></p>
                 <p>Price : <%=catering.getPrice()%></p>
                
-             			<input type="hidden" name="pricePhoto" value=" <%=catering.getPrice()%>">
+             			<input type="hidden" name="priceCatering" value=" <%=catering.getPrice()%>">
                       <input type="checkbox" name="selectedCaterings" value="<%= catering.getVendorId() %>">
                 
             </div>
