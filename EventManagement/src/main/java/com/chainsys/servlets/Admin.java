@@ -33,27 +33,18 @@ public class Admin extends HttpServlet {
      */
     public Admin() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		
 		InputStream inputStream = null;
 		
 		String action = request.getParameter("action");
-		HttpSession session = request.getSession();
+		
 		 if (action != null) {
 		        switch (action) {
 		            case "addVenue":
@@ -64,11 +55,11 @@ public class Admin extends HttpServlet {
 		            			int amount = Integer.parseInt(request.getParameter("price"));
 		            			Part filePart = request.getPart("venue_image");
 		            	        if (filePart != null) {
-		            	            // Debugging messages
+		            	         
 		            	            System.out.println(filePart.getName());
 		            	            System.out.println(filePart.getSize());
 		            	            System.out.println(filePart.getContentType());
-		            	            // Obtain the input stream of the uploaded file
+		            	            
 		            	            inputStream = filePart.getInputStream();
 		            	        }
 		            	        byte[] images =null;
@@ -90,13 +81,13 @@ public class Admin extends HttpServlet {
 						e.printStackTrace();
 					}
 					try {
-					    ArrayList<Venue> venueList = dbAction.getAllVenues();
-					    System.out.println(venueList);
+					    ArrayList<Venue> venueList = (ArrayList<Venue>) dbAction.getAllVenues();
+					   
 					    request.setAttribute("venueList", venueList);
 					    request.getRequestDispatcher("admin.jsp").forward(request, response);
 					} catch (ClassNotFoundException | SQLException e) {
 					    e.printStackTrace();
-					    // Handle exception appropriately
+					    
 					}
 
 						break;
@@ -110,6 +101,15 @@ public class Admin extends HttpServlet {
 		                    e.printStackTrace();
 		                    
 		                }	
+		                try {
+						    ArrayList<Venue> venueList = (ArrayList<Venue>) dbAction.getAllVenues();
+						    
+						    request.setAttribute("venueList", venueList);
+						    request.getRequestDispatcher("admin.jsp").forward(request, response);
+						} catch (ClassNotFoundException | SQLException e) {
+						    e.printStackTrace();
+						    
+						}
 		                break;
 		                
 		            case "addVendor" :
@@ -119,14 +119,15 @@ public class Admin extends HttpServlet {
 		                 vendor.setVendorName(vendorName);
 		                 vendor.setContact(vendorContact);
 		                 vendor.setVendorType(vendorType);
+		                 
 		                 int price = Integer.parseInt(request.getParameter("price"));
 	            			Part filesPart = request.getPart("profile_image");
 	            	        if (filesPart != null) {
-	            	            // Debugging messages
+	            	            
 	            	            System.out.println(filesPart.getName());
 	            	            System.out.println(filesPart.getSize());
 	            	            System.out.println(filesPart.getContentType());
-	            	            // Obtain the input stream of the uploaded file
+	            	          
 	            	            inputStream = filesPart.getInputStream();
 	            	        }
 	            	        byte[] image =null;
@@ -138,11 +139,18 @@ public class Admin extends HttpServlet {
 					try {
 						dbAction.addVendor(vendor);
 					} catch (ClassNotFoundException | SQLException e) {
-						// TODO Auto-generated catch block
+					
 						e.printStackTrace();
 					}
+		                 
 					break;
-	}			
+					
+			default: 	try {
+							response.sendRedirect("index.jsp");	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+	}		
 }
 }
 }

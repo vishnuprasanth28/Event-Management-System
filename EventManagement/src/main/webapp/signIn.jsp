@@ -85,7 +85,7 @@ html {
   <h2>Login</h2>
   <form action="UserLogs" method="post">
     <div class="user-box">
-      <input type="text"  name="Username" placeholder="Username"  required>
+      <input type="text"  name="Username" placeholder="adminName"  pattern="[A-Za-z]+" required>
       <label>AdminName</label>
     </div>
     <div class="user-box">

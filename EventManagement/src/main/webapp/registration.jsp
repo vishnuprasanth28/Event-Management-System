@@ -89,7 +89,7 @@
   <form action="UserLogs" method="post">
     <div class="form-group">
       <label for="username">User Name:</label>
-      <input type="text" id="username" name="username" required>
+      <input type="text" id="username" name="username" pattern="[A-Za-z]+" title="Please enter only letters" required>
     </div>
     <div class="form-group">
       <label for="mobile">Mobile No:</label>
@@ -101,14 +101,16 @@
     </div>
     <div class="form-group">
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" required>
+      <input type="password" id="password" name="password"   pattern="(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}" required>
     </div>
     <div class="form-group">
       <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" required>
+      <input type="password" id="confirmPassword" name="confirmPassword"  pattern="(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}" required>
     </div>
      <input type="hidden" name="action" value="register">
     <button type="submit">Register</button>
+    <br><br>
+    <a href="user.jsp">already have account ? </a>
   </form>
 </div>
 

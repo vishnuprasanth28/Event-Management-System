@@ -16,13 +16,11 @@ import com.chainsys.model.EventDetails;
 import com.chainsys.model.Vendor;
 import com.chainsys.model.Venue;
 
-/**
- * Servlet implementation class EventBookingServlet
- */
+
 @WebServlet("/EventBookingServlet")
 public class EventBookingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	DbOperation dbOperation = new DbOperation();
+	final DbOperation dbOperation = new DbOperation();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -30,9 +28,10 @@ public class EventBookingServlet extends HttpServlet {
 	public EventBookingServlet() {
 		super();
 	}
-
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		EventDetails eventDetails = new EventDetails();
 		String action = request.getParameter("action");
 
@@ -51,7 +50,7 @@ public class EventBookingServlet extends HttpServlet {
 				ArrayList<Venue> availableVenues = new ArrayList<>();
 				try {
 
-					availableVenues = dbOperation.getAvailableVenues(eventDate);
+					availableVenues = (ArrayList<Venue>) dbOperation.getAvailableVenues(eventDate);
 					request.setAttribute("venues", availableVenues);
 					request.setAttribute("event", eventType);
 					request.setAttribute("date", eventDate);
@@ -73,12 +72,13 @@ public class EventBookingServlet extends HttpServlet {
 					ArrayList<Vendor> availablePhotography = new ArrayList<>();
 					ArrayList<Vendor> availableCatering = new ArrayList<>();
 
-					availablePhotography = dbOperation.getPhotographers(serviceDate);
-					availableCatering = dbOperation.getCatering(serviceDate);
+					availablePhotography = (ArrayList<Vendor>) dbOperation.getPhotographers(serviceDate);
+					availableCatering = (ArrayList<Vendor>) dbOperation.getCatering(serviceDate);
 					request.setAttribute("photography", availablePhotography);
 					request.setAttribute("catering", availableCatering);
 					request.setAttribute("venueId", venueId);
 					request.setAttribute("venuePrice", venuePrice);
+					request.setAttribute("event", eventType);
 					request.getRequestDispatcher("addservice.jsp").forward(request, response);
 				} catch (ClassNotFoundException | SQLException e) {
 
@@ -88,61 +88,59 @@ public class EventBookingServlet extends HttpServlet {
 				break;
 
 			case "checkout":
-				eventType = request.getParameter("eventType");
-				System.out.println(eventType);
-				int venue = Integer.parseInt(request.getParameter("venue")); 
-				String venuepriceStr = request.getParameter("venuePrice");
-				dateString = request.getParameter("date");
-				String photographerId = request.getParameter("selectedPhotographers");
-				String photographyPriceStr= request.getParameter("pricePhoto");
-				String caterId = request.getParameter("selectedCaterings");
-				String cateringPriceStr =request.getParameter("priceCatering");
-				
-				venuepriceStr = venuepriceStr != null ? venuepriceStr.trim() : null;
-				
-				  photographyPriceStr = photographyPriceStr != null ? photographyPriceStr.trim() : null;
-				  cateringPriceStr = cateringPriceStr != null ? cateringPriceStr.trim() : null;
-				 int photoGraphyId = (photographerId != null && !photographerId.isEmpty()) ? Integer.parseInt(photographerId) : -1;
-			        int cateringId = (caterId != null && !caterId.isEmpty()) ? Integer.parseInt(caterId) : -1;
-
-			        int VenuePrice = (venuepriceStr != null && !venuepriceStr.isEmpty()) ? Integer.parseInt(venuepriceStr) : -1;
-			        int photographyPrice = (photographyPriceStr != null && !photographyPriceStr.isEmpty()) ? Integer.parseInt(photographyPriceStr) : -1;
-			        int cateringPrice = (cateringPriceStr != null && !cateringPriceStr.isEmpty()) ? Integer.parseInt(cateringPriceStr) : -1;
-			        double total;
-			        if (photographyPrice>0 && cateringPrice>0) {
-			        	total=photographyPrice+cateringPrice+VenuePrice;
-			        	eventDetails.setPhotographyPrice(photographyPrice);
-			        	eventDetails.setCateringPrice(cateringPrice);
-			        	
-			        }else if(photographyPrice<0) {
-			        	total=cateringPrice+VenuePrice;
-			        	eventDetails.setCateringPrice(cateringPrice);
-			        	eventDetails.setPhotographyPrice(photographyPrice);
-			        	
-			        }else if(cateringPrice<0) {
-			        	total=photographyPrice+VenuePrice;
-			        	eventDetails.setCateringPrice(cateringPrice);
-			        	eventDetails.setPhotographyPrice(photographyPrice);
-			        }else {
-			        	total=VenuePrice;
-			        	eventDetails.setPhotographyPrice(photographyPrice);
-			        	eventDetails.setCateringPrice(cateringPrice);
-			        }
+				 	eventType = request.getParameter("eventType");
+		            int venue = Integer.parseInt(request.getParameter("venue")); 
+		            int venuePrice = Integer.parseInt(request.getParameter("venuePrice"));
+		            dateString = request.getParameter("date");
+		            
+		            String photographerId = request.getParameter("selectedPhotographers");
+		            int selectedPhotographerId = -1;
+		            int photographyPrice = 0;
+		            if (photographerId != null && !photographerId.isEmpty()) {
+		                selectedPhotographerId = Integer.parseInt(photographerId);
+		                photographyPrice = Integer.parseInt(request.getParameter("pricePhoto_" + selectedPhotographerId));
+		            } else {
+		            	 photographyPrice = 0;
+		            	 selectedPhotographerId = -1;
+		            }
+		            
+		            String caterId = request.getParameter("selectedCaterings");
+		            int selectedCateringId = -1;
+		            int cateringPrice = 0;
+		            if (caterId != null && !caterId.isEmpty()) {
+		                selectedCateringId = Integer.parseInt(caterId);
+		                cateringPrice = Integer.parseInt(request.getParameter("priceCatering_" + selectedCateringId));
+		            } else {
+		                selectedCateringId = -1;
+			            cateringPrice = 0;
+		            }
+		            
+		            double total = venuePrice + photographyPrice + cateringPrice;
+			        eventDetails.setCateringPrice(cateringPrice);
+		        	eventDetails.setPhotographyPrice(photographyPrice);
 			        eventDetails.setEventType(eventType);
 			        eventDetails.setDateString(dateString);
 			        eventDetails.setEstimatedPrice(total);
 			        eventDetails.setVenueId(venue);
-			        eventDetails.setVenuePrice(VenuePrice);
-			        eventDetails.setCateringId(cateringId);
-			        eventDetails.setPhotoGraphyId(photoGraphyId);
+			        eventDetails.setVenuePrice(venuePrice);
+			        eventDetails.setCateringId(selectedCateringId);
+			        eventDetails.setPhotoGraphyId(selectedPhotographerId);
 			        request.setAttribute("event", eventDetails);
 			       
-
-			        response.sendRedirect("checkout.jsp");
+			        	try {
+			        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+			        	}catch(Exception e) {
+			        		e.printStackTrace();
+			        	}
 				break;
 				
-				default: response.sendRedirect("index.jsp");
+				default: try {
+					response.sendRedirect("index.jsp");
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
+		
 	}
 }

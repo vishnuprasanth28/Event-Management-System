@@ -100,7 +100,7 @@ boolean isLoggedIn = (user != null);
  <input type="hidden" name="venue" value="<%= request.getAttribute("venueId") %>">
  <input type="hidden" name="venuePrice" value="<%= request.getAttribute("venuePrice") %>">
     <input type="hidden" name="date" value="<%= request.getParameter("date") %>">
-    <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
+    <input type="hidden" name="eventType" value="<%= request.getAttribute("event") %>">
 	  <input type="hidden" name="action" value="checkout">
 <h1>Photography</h1>
 <div class="box">
@@ -119,8 +119,9 @@ boolean isLoggedIn = (user != null);
                 <h2><i class="fas fa-camera"></i>&nbsp;&nbsp;&nbsp;<%= photographer.getVendorName()%></h2>
                 <p>Contact Phone : <%=photographer.getContact()%></p>
                 <p>Price : <%=photographer.getPrice()%></p>
-                <input type="hidden" name="pricePhoto" value=" <%=photographer.getPrice()%>">
-               <input type="checkbox" name="selectedPhotographers" value="<%= photographer.getVendorId() %>">
+                
+               <input type="radio" name="selectedPhotographers" value="<%= photographer.getVendorId() %>">
+               <input type="hidden" name="pricePhoto_<%= photographer.getVendorId() %>" value="<%= photographer.getPrice() %>">
                 
             </div>
        
@@ -148,9 +149,9 @@ boolean isLoggedIn = (user != null);
                 <p>Contact Phone : <%=catering.getContact()%></p>
                 <p>Price : <%=catering.getPrice()%></p>
                
-             			<input type="hidden" name="priceCatering" value=" <%=catering.getPrice()%>">
-                      <input type="checkbox" name="selectedCaterings" value="<%= catering.getVendorId() %>">
-                
+             			
+                      <input type="radio" name="selectedCaterings" value="<%= catering.getVendorId() %>">
+                	<input type="hidden" name="priceCatering_<%= catering.getVendorId() %>" value="<%= catering.getPrice() %>">
             </div>
 <%
         }

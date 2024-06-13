@@ -16,41 +16,25 @@ import com.chainsys.dao.DbOperation;
 import com.chainsys.model.User;
 import com.chainsys.model.Venue;
 
-/**
- * Servlet implementation class UserLogs
- */
+
+
+
 @WebServlet("/UserLogs")
 public class UserLogs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	DbOperation dbCheck = new DbOperation();
-	User user = new User();
+	final DbOperation dbCheck = new DbOperation();
+	
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+	
 	public UserLogs() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	
+		User user = new User();
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 
@@ -66,14 +50,14 @@ public class UserLogs extends HttpServlet {
 					if (dbCheck.adminLogin(user)) {
 
 						session.setAttribute("admin", user.getUsername());
-						ArrayList<Venue> venueList = dbCheck.getAllVenues();
+						ArrayList<Venue> venueList = (ArrayList<Venue>) dbCheck.getAllVenues();
 
 						request.setAttribute("venueList", venueList);
 						request.getRequestDispatcher("admin.jsp").forward(request, response);
 
 					}
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
 				break;
@@ -82,7 +66,7 @@ public class UserLogs extends HttpServlet {
 				String username = request.getParameter("username");
 				String mobile = request.getParameter("mobile");
 				String email = request.getParameter("email");
-				String pass = request.getParameter("password");
+				
 				String confirmPassword = request.getParameter("confirmPassword");
 				user.setUsername(username);
 				user.setPassword(confirmPassword);
@@ -94,7 +78,7 @@ public class UserLogs extends HttpServlet {
 					response.sendRedirect("registration.jsp");
 
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				break;
@@ -115,7 +99,7 @@ public class UserLogs extends HttpServlet {
 						response.sendRedirect("login.jsp?error=true");
 					}
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 

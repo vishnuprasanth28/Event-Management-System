@@ -101,9 +101,9 @@ public class DbOperation {
 		System.out.println("Affected row"+row);
 
 	}
-	public ArrayList<Venue> getAllVenues() throws ClassNotFoundException, SQLException {
+	public List<Venue> getAllVenues() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Venue venue = new Venue();
+		
 		ArrayList<Venue> venues = new ArrayList<>();
 		Connection connection= ConnectionUtil.getConnection();
 
@@ -114,7 +114,7 @@ public class DbOperation {
             PreparedStatement preparedStatement = connection.prepareStatement(getVenue);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                
+            	Venue venue = new Venue();
                 venue.setVenueId(resultSet.getInt("venue_id"));
                 venue.setVenueName(resultSet.getString("venue_name"));
                 venue.setAddress(resultSet.getString("venue_address"));
@@ -151,9 +151,9 @@ public class DbOperation {
 		System.out.println("Affected row "+row);
 		}
 	
-	public static ArrayList<Venue> getVenues() throws ClassNotFoundException, SQLException {
+	public static List<Venue> getVenues() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Venue venue = new Venue();
+		
 		ArrayList<Venue> venues = new ArrayList<>();
 		Connection connection= ConnectionUtil.getConnection();
 		 PreparedStatement preparedStatement = null;
@@ -164,7 +164,7 @@ public class DbOperation {
             preparedStatement = connection.prepareStatement(getVenue);
              resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                
+            	Venue venue = new Venue();
                 venue.setVenueId(resultSet.getInt("venue_id"));
                 venue.setVenueName(resultSet.getString("venue_name"));
                 venue.setAddress(resultSet.getString("venue_address"));
@@ -173,7 +173,7 @@ public class DbOperation {
                 venue.setPrice(resultSet.getInt("price"));
                 Blob blob = resultSet.getBlob("venue_image");
                 byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-             //   String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+           
                 venue.setImage(imageBytes);
                 venues.add(venue);
             }
@@ -192,9 +192,9 @@ public class DbOperation {
 			return venues; 
         
 }
-	 public ArrayList<Venue> getAvailableVenues(Date date) throws SQLException, ClassNotFoundException {
+	 public List<Venue> getAvailableVenues(Date date) throws SQLException, ClassNotFoundException {
 		 Class.forName("com.mysql.cj.jdbc.Driver");
-			Venue venue = new Venue();
+			
 	        ArrayList<Venue> availableVenues = new ArrayList<>();
 	        Connection connection= ConnectionUtil.getConnection();
 	        String selectVenue = "SELECT venue_id,venue_name, venue_address, capacity, contact_phone, price,venue_image FROM Venue WHERE venue_id NOT IN (SELECT venue_id FROM Events WHERE event_date = ?)";
@@ -202,6 +202,7 @@ public class DbOperation {
 	            statement.setDate(1, date);
 	            try (ResultSet resultSet = statement.executeQuery()) {
 	                while (resultSet.next()) {
+	                	Venue venue = new Venue();
 	                	venue.setVenueId(resultSet.getInt("venue_id"));
 	                    venue.setVenueName(resultSet.getString("venue_name"));
 	                    venue.setAddress(resultSet.getString("venue_address"));
@@ -219,7 +220,7 @@ public class DbOperation {
 	        return availableVenues;
 	    }
 	
-	 public ArrayList<Vendor> getPhotographers(Date date) throws ClassNotFoundException, SQLException{
+	 public List<Vendor> getPhotographers(Date date) throws ClassNotFoundException, SQLException{
 		 Class.forName("com.mysql.cj.jdbc.Driver");
 			
 	        ArrayList<Vendor> availableVendors = new ArrayList<>();
@@ -245,7 +246,7 @@ public class DbOperation {
 	        return availableVendors;
 	 }
 	
-	 public ArrayList<Vendor> getCatering(Date date) throws ClassNotFoundException, SQLException{
+	 public List<Vendor> getCatering(Date date) throws ClassNotFoundException, SQLException{
 		 Class.forName("com.mysql.cj.jdbc.Driver");
 			
 	        ArrayList<Vendor> availableCatering = new ArrayList<>();
