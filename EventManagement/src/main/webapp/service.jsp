@@ -7,7 +7,7 @@ User user = (User) session.getAttribute("user");
 boolean isLoggedIn = (user != null);
 %>
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
     <meta charset="UTF-8">
     <title>Event Services</title>
@@ -295,7 +295,7 @@ font-size: 1.6rem;
                 <% } else { %>
                 <!-- Show user's name if logged in -->
                 <li class="nav-item">
-                    <span class="nav-link">Welcome <%= user.getUsername() %></span>
+                    <span class="nav-link">Hii <%= user.getUsername() %></span>
                     
                 </li>
                 <li class="nav-item">

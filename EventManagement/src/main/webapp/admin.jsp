@@ -4,20 +4,20 @@
 <%@ page import="com.chainsys.model.Venue"%>
 <%
 response.setHeader("cache-control", "no-cache,no-store,must-revalidate");
-if (session.getAttribute("admin")==null) {
-    response.sendRedirect("login.jsp");
-    return;
+if (session.getAttribute("admin") == null) {
+	response.sendRedirect("login.jsp");
+	return;
 }
 String admin = null;
 
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if ("admin".equals(cookie.getName())) {
-                admin = cookie.getValue();
-                break;
-            }
-        }
+Cookie[] cookies = request.getCookies();
+if (cookies != null) {
+	for (Cookie cookie : cookies) {
+		if ("admin".equals(cookie.getName())) {
+	admin = cookie.getValue();
+	break;
+		}
+	}
 }
 %>
 <!DOCTYPE html>
@@ -108,7 +108,7 @@ label {
 				aria-labelledby="mystocks-tab">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title"><%= session.getAttribute("admin") %></h5>
+						<h5 class="card-title"><%=session.getAttribute("admin")%></h5>
 						<h3>Epic Events</h3>
 						<form action="LogOutServlet" method="post">
 							<button type="submit" class="btn btn-primary">Logout</button>
@@ -128,7 +128,7 @@ label {
 									id="name" name="name" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="Address">Address:</label> <input type="text"
+								<label for="Address">Location:</label> <input type="text"
 									id="address" name="address" class="form-control">
 							</div>
 							<div class="form-group">
@@ -167,30 +167,45 @@ label {
 							<tbody>
 
 								<%
-                    ArrayList<Venue> venuesList = (ArrayList<Venue>) request.getAttribute("venueList");
-                        for (Venue venue : venuesList) {
-                    %>
+								ArrayList<Venue> venuesList = (ArrayList<Venue>) request.getAttribute("venueList");
+								for (Venue venue : venuesList) {
+								%>
 								<tr>
-									<td><%= venue.getVenueId() %></td>
-									<td><%= venue.getVenueName() %></td>
-									<td><%= venue.getAddress() %></td>
-									<td><%= venue.getCapacity() %></td>
-									<td><%= venue.getContactPhone() %></td>
-									<td><%= venue.getPrice() %></td>
+									<td><%=venue.getVenueId()%></td>
+									<td><%=venue.getVenueName()%></td>
+									<td><%=venue.getAddress()%></td>
+									<td><%=venue.getCapacity()%></td>
+									<td><%=venue.getContactPhone()%></td>
+									<td><%=venue.getPrice()%></td>
 									<td>
-										<form action="Admin" method="post">
-											<input type="hidden" name="action" value="delete"> <input
+										
+
+										
+											<div class="col-sm-12 d-flex justify-content-end mb-2 ">
+											<form action="Admin" method="post">
+											<input type="hidden" name="action" value="delete" class="p-2"> <input
 												type="hidden" name="deleteid"
-												value="<%=venue.getVenueId() %>">
+												value="<%=venue.getVenueId()%>">
 											<button class="btn btn-danger" type="submit">Delete</button>
 										</form>
-
-										<button class="btn btn-primary">Update</button>
+											
+                    <button class="btn btn-primary btnUpdateVenue  ml-2"
+                            data-id="<%=venue.getVenueId()%>"
+                            data-capacity="<%=venue.getCapacity()%>"
+                            data-price="<%=venue.getPrice()%>"
+                            data-phone="<%=venue.getContactPhone()%>">Update</button>
+                    
+                </div>
+										
 									</td>
 								</tr>
-								<% } %>
+								<%
+								}
+								%>
 							</tbody>
 						</table>
+						
+					
 
 					</div>
 				</div>
@@ -221,8 +236,8 @@ label {
 							name="price" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="profile_image">Profile :</label>
-						 <input type="file"	id="profile_image" name="profile_image" class="form-control-file"
+						<label for="profile_image">Profile :</label> <input type="file"
+							id="profile_image" name="profile_image" class="form-control-file"
 							accept="image/*" required>
 					</div>
 					<input type="hidden" name="action" value="addVendor">
@@ -241,7 +256,77 @@ label {
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-		
-		
+	<!-- Existing HTML code... -->
+
+<!-- Modal for Update Form -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update Venue</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm" action="Admin" method="post">
+                    <div class="form-group">
+                        <label for="updateName">Venue Name:</label>
+                        <input type="text" id="updateName" name="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAddress">Address:</label>
+                        <input type="text" id="updateAddress" name="address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateCapacity">Capacity:</label>
+                        <input type="number" id="updateCapacity" name="capacity" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateContact">Contact:</label>
+                        <input type="number" id="updateContact" name="contact" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePrice">Price:</label>
+                        <input type="number" id="updatePrice" name="price" class="form-control">
+                    </div>
+                    <input type="hidden" id="updateVenueId" name="venueId">
+                    <input type="hidden" name="action" value="updateVenue">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Existing HTML continues... -->
+
+<script>
+    $(document).ready(function() {
+        $('.btnUpdateVenue').on('click', function() {
+            // Get data attributes from the button
+            var venueId = $(this).data('id');
+            var capacity = $(this).data('capacity');
+            var price = $(this).data('price');
+            var phone = $(this).data('phone');
+
+            // Set values in the modal form fields
+            $('#updateVenueId').val(venueId);
+            $('#updateName').val($(this).closest('tr').find('td:eq(1)').text().trim()); // Example for Venue Name, adjust according to your table
+            $('#updateAddress').val($(this).closest('tr').find('td:eq(2)').text().trim()); // Example for Address
+            $('#updateCapacity').val(capacity);
+            $('#updateContact').val(phone);
+            $('#updatePrice').val(price);
+
+            // Show the modal
+            $('#updateModal').modal('show');
+        });
+    });
+</script>
+
+<!-- Bootstrap and jQuery scripts continue... -->
+	
+
+
 </body>
 </html>

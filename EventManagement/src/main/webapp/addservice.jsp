@@ -15,7 +15,7 @@ User user = (User) session.getAttribute("user");
 boolean isLoggedIn = (user != null);
 %>
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
 <meta charset="ISO-8859-1">
 <title>Additional Services</title>
@@ -115,10 +115,10 @@ boolean isLoggedIn = (user != null);
 %>
             <div class="card">
             
-                <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile Image">
+                <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile ">
                 <h2><i class="fas fa-camera"></i>&nbsp;&nbsp;&nbsp;<%= photographer.getVendorName()%></h2>
                 <p>Contact Phone : <%=photographer.getContact()%></p>
-                <p>Price : <%=photographer.getPrice()%></p>
+                <p>Price starts from : <%=photographer.getPrice()%></p>
                 
                <input type="radio" name="selectedPhotographers" value="<%= photographer.getVendorId() %>">
                <input type="hidden" name="pricePhoto_<%= photographer.getVendorId() %>" value="<%= photographer.getPrice() %>">
@@ -144,10 +144,10 @@ boolean isLoggedIn = (user != null);
 %>
             <div class="card">
             
-                <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile Image">
+                <img src="data:image/jpeg;base64,<%=base64Image%>" alt="profile ">
                 <h2><i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;<%=catering.getVendorName()%></h2>
                 <p>Contact Phone : <%=catering.getContact()%></p>
-                <p>Price : <%=catering.getPrice()%></p>
+                <p>Price starts from  : <%=catering.getPrice()%></p>
                
              			
                       <input type="radio" name="selectedCaterings" value="<%= catering.getVendorId() %>">

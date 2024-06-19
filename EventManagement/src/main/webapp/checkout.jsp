@@ -5,20 +5,39 @@
 <%@ page import="com.chainsys.model.Venue"%>
 <%@ page import="com.chainsys.model.Vendor"%>
 <%@ page import="java.util.*"%>
-
 <%
 
 User user = (User) session.getAttribute("user");
 boolean isLoggedIn = (user != null);
 %>
+
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
 <title>Checkout</title>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	rel="stylesheet">
+<style>
+  /* Custom styles for hover effects */
+  .nav-item:hover .nav-link {
+    color: #ffc107 !important; /* Change color on hover */
+  }
+  .nav-link.dropdown-toggle:hover::after {
+    transform: rotate(180deg); /* Rotate dropdown arrow on hover */
+  }
+  .dropdown-item:hover {
+    background-color: #343a40 !important; /* Change background color of dropdown items on hover */
+  }
+  .dropdown-item:hover .dropdown-item {
+    color: #ffc107 !important; /* Change color of dropdown items on hover */
+  }
+  .btn-primary:hover {
+    background-color: #ffc107 !important; /* Change background color of primary button on hover */
+    border-color: #ffc107 !important; /* Change border color of primary button on hover */
+  }
+</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -80,30 +99,35 @@ boolean isLoggedIn = (user != null);
 				<%= eventDetails.getDateString() %></p>
 		</div>
 		<div>
-			<h2>Selected Photography</h2>
+			<h2>Selected Services</h2>
+			
 			<p>
-				Photography Vendor ID:
-				<%= eventDetails.getPhotoGraphyId() %></p>
-			<p>
-				Photography Vendor Price:
+				<i class="fa fa-rupee">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Photography Price</i>:
 				<%= eventDetails.getPhotographyPrice() %></p>
 		</div>
 		<div>
-			<h2>Selected Catering</h2>
+			
 			<p>
-				Catering ID:
-				<%= eventDetails.getCateringId() %></p>
-			<p>
-				Catering Price:
+				<i class="fa fa-rupee">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Catering Price</i>:
 				<%= eventDetails.getCateringPrice() %></p>
 		</div>
 		<div>
 			<h2>Estimated Amount</h2>
 
 			<p>
-				Total:
+				<i class="fa fa-rupee">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total</i>:
 				<%= eventDetails.getEstimatedPrice() %></p>
 			<button onclick="window.print()"> Download Estimation </button>
+			<br>
+			<br>
+			<form action="PaymentServlet" method="post">
+			<input type="hidden" name="date" value="<%= eventDetails.getDateString()%>">
+				<input type="hidden" name="event" value="<%= eventDetails.getEventType()%>">
+				<input type="hidden" name="venueId" value="<%= eventDetails.getVenueId() %>">
+				<input type="hidden" name="photographyVendorId" value="<%= eventDetails.getPhotoGraphyId() %>">
+				<input type="hidden" name="cateringVendorId" value="<%= eventDetails.getCateringId() %>">
+				<button type="submit" class="btn btn-primary">Pay Now</button>
+			</form>
 		</div>
 	</div>
 </body>

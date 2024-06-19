@@ -7,7 +7,7 @@ User user = (User) session.getAttribute("user");
 boolean isLoggedIn = (user != null);
 %>
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
     <meta charset="UTF-8">
     <title>Event Booking</title>
@@ -58,16 +58,19 @@ boolean isLoggedIn = (user != null);
 
 <div class="container mt-5">
     <h2>Book Your Event</h2>
-    <form action="EventBookingServlet" method="post">
+    <form action="EventBookingServlet" method="post" onsubmit="return validateForm()" id="eventBookingForm">
         <div class="form-group">
             <label for="eventDate">Event Date:</label>
-            <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+            <input type="date" class="form-control" id="eventDate" name="eventDate"   max="2024-12-30" required>
         </div>
         <div class="form-group">
             <label for="visitorsCount">Number of Visitors:</label>
             <input type="number" class="form-control" id="visitorsCount" name="visitorsCount" required>
         </div>
-        
+         <div class="form-group">
+            <label for="location">location:</label>
+            <input type="text" class="form-control" id="location" name="location"  pattern="[A-Za-z ]+"  required>
+        </div>
         <input type="hidden" name="eventType" value="<%= request.getParameter("event") %>">
         <input type="hidden" name="action" value="getVenue">
         <button type="submit" class="btn btn-primary">Book Event</button>
@@ -92,5 +95,33 @@ boolean isLoggedIn = (user != null);
     
 </div>
 
+<script>
+    function validateForm() {
+        var eventDateInput = document.getElementById("eventDate");
+        var eventDate = eventDateInput.value;
+        var visitorsCount = document.getElementById("visitorsCount").value;
+        var locationInput = document.getElementById("location");
+        var location = locationInput.value.trim(); 
+
+        
+        var currentDate = new Date();
+        var selectedDate = new Date(eventDate);
+
+        if (selectedDate < currentDate) {
+            alert("Event date must be from today onwards.");
+            eventDateInput.focus(); 
+            return false;
+        }
+
+       
+        if (!/^[A-Za-z ]+$/.test(location)) {
+            alert("Location should contain only alphabetic characters.");
+            locationInput.focus(); 
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </body>
 </html>

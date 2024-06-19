@@ -7,7 +7,7 @@ public class EventDetails {
 		return "EventDetails [venueId=" + venueId + ", venuePrice=" + venuePrice + ", eventType=" + eventType
 				+ ", dateString=" + dateString + ", photoGraphyId=" + photoGraphyId + ", photographyPrice="
 				+ photographyPrice + ", cateringId=" + cateringId + ", cateringPrice=" + cateringPrice
-				+ ", estimatedPrice=" + estimatedPrice + "]";
+				+ ", estimatedPrice=" + estimatedPrice + ", userId=" + userId + "]";
 	}
 	public int getVenueId() {
 		return venueId;
@@ -73,5 +73,12 @@ public class EventDetails {
 	private int cateringId;
 	private int cateringPrice;
 	private double estimatedPrice;
+	private int userId;
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	
 }

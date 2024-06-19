@@ -8,7 +8,7 @@ User user = (User) session.getAttribute("user");
 boolean isLoggedIn = (user != null);
 %>
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
 <meta charset="ISO-8859-1">
 <title>Epic Events</title>
@@ -97,7 +97,7 @@ boolean isLoggedIn = (user != null);
     <span class="navbar-text mr-auto">EPIC EVENTS</span>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="index.jsp">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="service.jsp">Services</a>
@@ -178,7 +178,7 @@ boolean isLoggedIn = (user != null);
             </div>
             <div class="col-md-3">
                 <h5>Contact Us</h5>
-                <p>123 Street, madurai</p>
+                <p>123 Street, Madurai</p>
                 <p>Email: epicevent@gmail.com</p>
                 <p>Phone: +91 9090878900</p>
             </div>

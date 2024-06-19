@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -86,11 +86,11 @@ html {
   <form action="UserLogs" method="post">
     <div class="user-box">
       <input type="text"  name="Username" placeholder="adminName"  pattern="[A-Za-z]+" required>
-      <label>AdminName</label>
+      <label for="adminName">AdminName</label>
     </div>
     <div class="user-box">
       <input type="password" name="Password" placeholder="Password"  required>
-      <label>Password</label>
+      <label for="Password">Password</label>
     </div>
     
      <br>

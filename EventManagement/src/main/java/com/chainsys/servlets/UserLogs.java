@@ -1,7 +1,7 @@
 package com.chainsys.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -32,82 +32,99 @@ public class UserLogs extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	
-		User user = new User();
-		String action = request.getParameter("action");
-		HttpSession session = request.getSession();
+	        throws ServletException, IOException {
+	    
+	    String action = request.getParameter("action");
 
-		if (action != null) {
-			switch (action) {
-			case "admin":
-				String name = request.getParameter("Username");
-				String password = request.getParameter("Password");
-				user.setUsername(name);
-				user.setPassword(password);
-
-				try {
-					if (dbCheck.adminLogin(user)) {
-
-						session.setAttribute("admin", user.getUsername());
-						ArrayList<Venue> venueList = (ArrayList<Venue>) dbCheck.getAllVenues();
-
-						request.setAttribute("venueList", venueList);
-						request.getRequestDispatcher("admin.jsp").forward(request, response);
-
-					}
-				} catch (ClassNotFoundException | SQLException e) {
-				
-					e.printStackTrace();
-				}
-				break;
-
-			case "register":
-				String username = request.getParameter("username");
-				String mobile = request.getParameter("mobile");
-				String email = request.getParameter("email");
-				
-				String confirmPassword = request.getParameter("confirmPassword");
-				user.setUsername(username);
-				user.setPassword(confirmPassword);
-				user.setMobile(mobile);
-				user.setEmail(email);
-				try {
-					dbCheck.insertUser(user);
-
-					response.sendRedirect("registration.jsp");
-
-				} catch (ClassNotFoundException | SQLException e) {
-					
-					e.printStackTrace();
-				}
-				break;
-
-			case "user":
-				String userName = request.getParameter("Username");
-				String userPass = request.getParameter("Password");
-				user.setUsername(userName);
-				user.setPassword(userPass);
-
-				try {
-					if (dbCheck.userLogin(user)) {
-						user.setUserId(dbCheck.getUserId(user));
-
-						session.setAttribute("user", user);
-						response.sendRedirect("index.jsp");
-					} else {
-						response.sendRedirect("login.jsp?error=true");
-					}
-				} catch (ClassNotFoundException | SQLException e) {
-					
-					e.printStackTrace();
-				}
-
-				break;
-			default:
-				System.out.println("Invalid");
-			}
-
-		}
+	    if (action != null) {
+	        switch (action) {
+	            case "admin":
+	                adminLogin(request, response);
+	                break;
+	            case "register":
+	                registerUser(request, response);
+	                break;
+	            case "user":
+	                userLogin(request, response);
+	                break;
+	            default:
+	                System.out.println("Invalid action");
+	                break;
+	        }
+	    } else {
+	        System.out.println("No action provided");
+	    }
 	}
+
+	private void adminLogin(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    
+	    String name = request.getParameter("Username");
+	    String password = request.getParameter("Password");
+	    
+	    User user = new User();
+	    user.setUsername(name);
+	    user.setPassword(password);
+
+	    HttpSession session = request.getSession();
+
+	    try {
+	        if (dbCheck.adminLogin(user)) {
+	            session.setAttribute("admin", user.getUsername());
+	            ArrayList<Venue> venueList = (ArrayList<Venue>) dbCheck.getAllVenues();
+	            request.setAttribute("venueList", venueList);
+	            request.getRequestDispatcher("admin.jsp").forward(request, response);
+	        }
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	private void registerUser(HttpServletRequest request, HttpServletResponse response)
+	        throws IOException {
+	    
+	    String username = request.getParameter("username");
+	    String mobile = request.getParameter("mobile");
+	    String email = request.getParameter("email");
+	    String confirmPassword = request.getParameter("confirmPassword");
+	    
+	    User user = new User();
+	    user.setUsername(username);
+	    user.setPassword(confirmPassword);
+	    user.setMobile(mobile);
+	    user.setEmail(email);
+
+	    try {
+	        dbCheck.insertUser(user);
+	        response.sendRedirect("registration.jsp");
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	private void userLogin(HttpServletRequest request, HttpServletResponse response)
+	        throws IOException {
+	    
+	    String userName = request.getParameter("Username");
+	    String userPass = request.getParameter("Password");
+	    
+	    User user = new User();
+	    user.setUsername(userName);
+	    user.setPassword(userPass);
+
+	    HttpSession session = request.getSession();
+
+	    try {
+	        if (dbCheck.userLogin(user)) {
+	            user.setUserId(dbCheck.getUserId(user));
+	            session.setAttribute("user", user);
+	            response.sendRedirect("index.jsp");
+	        } else {
+	            response.sendRedirect("login.jsp?error=true");
+	        }
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 }
