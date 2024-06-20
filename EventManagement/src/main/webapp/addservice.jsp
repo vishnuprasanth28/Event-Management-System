@@ -67,7 +67,8 @@ boolean isLoggedIn = (user != null);
                     <a class="nav-link" href="registration.jsp">Sign Up</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  onkeypress="handleKeyPress(event)"
+       onkeydown="handleKeyDown(event)">
                     Sign In
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

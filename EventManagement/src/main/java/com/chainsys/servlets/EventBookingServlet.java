@@ -37,23 +37,55 @@ public class EventBookingServlet extends HttpServlet {
 	    if (action != null) {
 	        switch (action) {
 	            case "getVenue":
+	            	try {
 	                handleGetVenue(request, response);
+	            	}catch (Exception e) {
+	            		e.printStackTrace();
+	            	}
 	                break;
 	            case "getService":
+	            	try {
 	                handleGetService(request, response);
+	            	}catch (Exception e) {
+	            		e.printStackTrace();
+	            	}
 	                break;
 	            case "checkout":
+	            	try {
 	                handleCheckout(request, response);
+	            	}catch (Exception e) {
+	            		e.printStackTrace();
+	            	}
 	                break;
+	                
+	            case "filterVenue":
+	            	try {
+		                getVenueFiltered(request, response);
+		            	}catch (Exception e) {
+		            		e.printStackTrace();
+		            	}
+		                break;
 	            default:
+	            	try {
 	                response.sendRedirect("index.jsp");
+	            	}catch (Exception e) {
+	            		e.printStackTrace();
+	            	}
 	                break;
 	        }
 	    } else {
-	        response.sendRedirect("index.jsp");
+	    	try {
+	    	response.sendRedirect("index.jsp");
+	    	}catch (Exception e) {
+        		e.printStackTrace();
+        	}
 	    }
 	}
 
+	private void getVenueFiltered(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+	}
 	private void handleGetVenue(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 	    

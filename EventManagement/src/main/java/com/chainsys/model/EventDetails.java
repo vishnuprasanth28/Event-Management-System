@@ -7,7 +7,9 @@ public class EventDetails {
 		return "EventDetails [venueId=" + venueId + ", venuePrice=" + venuePrice + ", eventType=" + eventType
 				+ ", dateString=" + dateString + ", photoGraphyId=" + photoGraphyId + ", photographyPrice="
 				+ photographyPrice + ", cateringId=" + cateringId + ", cateringPrice=" + cateringPrice
-				+ ", estimatedPrice=" + estimatedPrice + ", userId=" + userId + "]";
+				+ ", estimatedPrice=" + estimatedPrice + ", userId=" + userId + ", eventId=" + eventId + ", userName="
+				+ userName + ", venueName=" + venueName + ", photographyName=" + photographyName + ", cateringName="
+				+ cateringName + ", eventName=" + eventName + "]";
 	}
 	public int getVenueId() {
 		return venueId;
@@ -74,6 +76,53 @@ public class EventDetails {
 	private int cateringPrice;
 	private double estimatedPrice;
 	private int userId;
+	private int eventId;
+	public int getEventId() {
+		return eventId;
+	}
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getVenueName() {
+		return venueName;
+	}
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
+	}
+	public String getPhotographyName() {
+		return photographyName;
+	}
+	public void setPhotographyName(String photographyName) {
+		this.photographyName = photographyName;
+	}
+	public String getCateringName() {
+		return cateringName;
+	}
+	public void setCateringName(String cateringName) {
+		this.cateringName = cateringName;
+	}
+	public String getEventName() {
+		return eventName;
+	}
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+	private String userName;
+	private String venueName;
+	private String photographyName;
+	private String cateringName;
+	private String eventName;
+	
+	
+	
+	
+	
 	public int getUserId() {
 		return userId;
 	}

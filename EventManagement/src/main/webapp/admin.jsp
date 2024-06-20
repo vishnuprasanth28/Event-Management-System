@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="com.chainsys.model.Venue"%>
+<%@ page import="com.chainsys.model.EventDetails"%>
 <%
 response.setHeader("cache-control", "no-cache,no-store,must-revalidate");
 if (session.getAttribute("admin") == null) {
@@ -151,6 +152,16 @@ label {
 							<input type="hidden" name="action" value="addVenue">
 							<button type="submit" class="btn btn-submit">Submit</button>
 						</form>
+						<%ArrayList<Venue> venuesList = (ArrayList<Venue>) request.getAttribute("venueList");
+						if (venuesList == null || venuesList.isEmpty()) {
+							%>
+							<div class="alert alert-info" role="alert">
+							    No venues available.
+							</div>
+							<%
+							} else {
+						
+						%>
 						<table class="table">
 							<thead>
 								<tr>
@@ -167,7 +178,7 @@ label {
 							<tbody>
 
 								<%
-								ArrayList<Venue> venuesList = (ArrayList<Venue>) request.getAttribute("venueList");
+								
 								for (Venue venue : venuesList) {
 								%>
 								<tr>
@@ -201,6 +212,7 @@ label {
 								</tr>
 								<%
 								}
+							}
 								%>
 							</tbody>
 						</table>
@@ -246,7 +258,59 @@ label {
 
 			</div>
 			<div class="tab-pane fade" id="orders" role="tabpanel"
-				aria-labelledby="orders-tab"></div>
+				aria-labelledby="orders-tab">
+				
+				</form>
+						<%ArrayList<EventDetails> bookingList = (ArrayList<EventDetails>) request.getAttribute("bookedEvents");
+						if (bookingList == null || bookingList.isEmpty()) {
+							%>
+							<div class="alert alert-info" role="alert">
+							    No bookings available.
+							</div>
+							<%
+							} else {
+						
+						%>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Event Id</th>
+									<th>User Name</th>
+									<th>Venue Name</th>
+									<th>Photography</th>
+									<th>Catering</th>
+									<th>Event Type</th>
+									<th>Event Date</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+								<%
+								
+								for (EventDetails events : bookingList) {
+								%>
+								<tr>
+									<td><%=events.getEventId()  %></td>
+									<td><%=events.getUserName() %></td>
+									<td><%=events.getVenueName()%></td>
+									<td><%=events.getPhotographyName()%></td>
+									<td><%=events.getCateringName()%></td>
+									<td><%=events.getEventName()%></td>
+									<td><%=events.getDateString()%></td>
+									<td>
+										
+
+										
+											<div class="col-sm-12 d-flex justify-content-end mb-2 ">
+											<form action="Admin" method="post">
+											<input type="hidden" name="action" value="deleteEvent" class="p-2"> <input
+												type="hidden" name="deleteid"
+												value="<%= events.getEventId()%>">
+											<button class="btn btn-danger" type="submit">Delete</button>
+										</form>
+				<% } } %>
+				</div>
 		</div>
 	</div>
 

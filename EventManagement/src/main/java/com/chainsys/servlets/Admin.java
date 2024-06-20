@@ -23,7 +23,8 @@ import com.chainsys.model.Venue;
 @MultipartConfig
 public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
+	private static final String ADMIN_JSP = "admin.jsp";
+	private static final String VENUE_LIST_ATTRIBUTE = "venueList";
    final DbOperation dbAction = new DbOperation();
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,31 +38,42 @@ public class Admin extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
-	    
+
 	    String action = request.getParameter("action");
 
-	    if (action != null) {
-	        switch (action) {
-	            case "addVenue":
-	                addVenue(request, response);
-	                break;
-	            case "delete":
-	                deleteVenue(request, response);
-	                break;
-	            case "addVendor":
-	                addVendor(request, response);
-	                break;
-	            case "updateVenue":
-	                updateVenue(request, response);
-	                break;
-	            default:
-	                response.sendRedirect("index.jsp");
-	                break;
+	    try {
+	        if (action != null) {
+	            switch (action) {
+	                case "addVenue":
+	                    addVenue(request, response);
+	                    break;
+	                case "delete":
+	                    deleteVenue(request, response);
+	                    break;
+	                case "addVendor":
+	                    addVendor(request, response);
+	                    break;
+	                case "updateVenue":
+	                    updateVenue(request, response);
+	                    break;
+	                default:
+	                    redirectToIndex(response);
+	                    break;
+	            }
+	        } else {
+	            redirectToIndex(response);
 	        }
-	    } else {
-	        response.sendRedirect("index.jsp");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        
+	      
 	    }
 	}
+
+	private void redirectToIndex(HttpServletResponse response) throws IOException {
+	    response.sendRedirect("index.jsp");
+	}
+
 
 	private void addVenue(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
@@ -87,8 +99,8 @@ public class Admin extends HttpServlet {
 	    try {
 	        dbAction.addVenue(venue);
 	        ArrayList<Venue> venueList = (ArrayList<Venue>) dbAction.getAllVenues();
-	        request.setAttribute("venueList", venueList);
-	        request.getRequestDispatcher("admin.jsp").forward(request, response);
+	        request.setAttribute(VENUE_LIST_ATTRIBUTE, venueList);
+	        request.getRequestDispatcher(ADMIN_JSP).forward(request, response);
 	    } catch (ClassNotFoundException | SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -102,8 +114,8 @@ public class Admin extends HttpServlet {
 	        dbAction.deleteVenue(idToDelete);
 	        
 	        ArrayList<Venue> venueList = (ArrayList<Venue>) dbAction.getAllVenues();
-	        request.setAttribute("venueList", venueList);
-	        request.getRequestDispatcher("admin.jsp").forward(request, response);
+	        request.setAttribute(VENUE_LIST_ATTRIBUTE, venueList);
+	        request.getRequestDispatcher(ADMIN_JSP).forward(request, response);
 	    } catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -153,8 +165,8 @@ public class Admin extends HttpServlet {
 	        dbAction.updateVenueDetails(venue);
 	        
 	        ArrayList<Venue> venueList = (ArrayList<Venue>) dbAction.getAllVenues();
-	        request.setAttribute("venueList", venueList);
-	        request.getRequestDispatcher("admin.jsp").forward(request, response);
+	        request.setAttribute(VENUE_LIST_ATTRIBUTE, venueList);
+	        request.getRequestDispatcher(ADMIN_JSP).forward(request, response);
 	    } catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 	        e.printStackTrace();
 	    }

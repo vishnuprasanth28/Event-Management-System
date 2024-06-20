@@ -27,7 +27,7 @@ public class PaymentServlet extends HttpServlet {
      */
     public PaymentServlet() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	
@@ -38,9 +38,16 @@ public class PaymentServlet extends HttpServlet {
 		User user =(User) session.getAttribute("user");
 		int userId =user.getUserId();
 		String eventType = request.getParameter("event");
-        int venue = Integer.parseInt(request.getParameter("venueId")); 
-        int photographyId = Integer.parseInt(request.getParameter("photographyVendorId"));
-        int cateringId= Integer.parseInt(request.getParameter("cateringVendorId"));
+		int venue = 0 ;
+		int photographyId = 0;
+		int cateringId = 0;
+		try {
+         venue = Integer.parseInt(request.getParameter("venueId")); 
+         photographyId = Integer.parseInt(request.getParameter("photographyVendorId"));
+         cateringId= Integer.parseInt(request.getParameter("cateringVendorId"));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
         String dateString = request.getParameter("date");
         
         EventDetails eventDetails = new EventDetails();
@@ -57,8 +64,11 @@ public class PaymentServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
-        
+        try {
         response.sendRedirect("payment.jsp");
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
         
 	}
 

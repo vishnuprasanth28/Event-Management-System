@@ -108,7 +108,8 @@ boolean isLoggedIn = (user != null);
                     <a class="nav-link" href="registration.jsp">Sign Up</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"   onkeypress="handleKeyPress(event)"
+       onkeydown="handleKeyDown(event)">
                     Sign In
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -161,11 +162,13 @@ boolean isLoggedIn = (user != null);
       </div>
     </div>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"   onkeypress="handleKeyPress(event)"
+       onkeydown="handleKeyDown(event)">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"   onkeypress="handleKeyPress(event)"
+       onkeydown="handleKeyDown(event)">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.chainsys.dao.DbOperation;
+import com.chainsys.model.EventDetails;
 import com.chainsys.model.User;
 import com.chainsys.model.Venue;
 
@@ -39,22 +40,33 @@ public class UserLogs extends HttpServlet {
 	    if (action != null) {
 	        switch (action) {
 	            case "admin":
+	            	try {
 	                adminLogin(request, response);
+	            	}catch(Exception e) {
+	            		e.printStackTrace();
+	            	}
 	                break;
 	            case "register":
-	                registerUser(request, response);
+	             
+	                try {
+	                	   registerUser(request, response);
+		            	}catch(Exception e) {
+		            		e.printStackTrace();
+		            	}
 	                break;
 	            case "user":
-	                userLogin(request, response);
+	               
+	                try {
+	                	 userLogin(request, response);
+		            	}catch(Exception e) {
+		            		e.printStackTrace();
+		            	}
 	                break;
 	            default:
-	                System.out.println("Invalid action");
+	                
 	                break;
 	        }
-	    } else {
-	        System.out.println("No action provided");
-	    }
-	}
+	    } 	}
 
 	private void adminLogin(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
@@ -73,6 +85,8 @@ public class UserLogs extends HttpServlet {
 	            session.setAttribute("admin", user.getUsername());
 	            ArrayList<Venue> venueList = (ArrayList<Venue>) dbCheck.getAllVenues();
 	            request.setAttribute("venueList", venueList);
+	            ArrayList<EventDetails> events = (ArrayList<EventDetails>) dbCheck.getEvents();
+	            request.setAttribute("bookedEvents", events);
 	            request.getRequestDispatcher("admin.jsp").forward(request, response);
 	        }
 	    } catch (ClassNotFoundException | SQLException e) {

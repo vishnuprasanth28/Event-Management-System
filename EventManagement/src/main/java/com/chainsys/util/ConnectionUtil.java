@@ -18,6 +18,6 @@ public class ConnectionUtil   {
     	String url ="jdbc:mysql://localhost:3306/event_management";
     	String root ="root";
     	
-        return DriverManager.getConnection(url, root, "Mechatronics@1");
+        return DriverManager.getConnection(url, root, System.getenv("mySqlPassword"));
     }
 }
